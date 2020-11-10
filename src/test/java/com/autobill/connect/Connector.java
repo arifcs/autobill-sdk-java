@@ -16,7 +16,7 @@ public class Connector {
     }
     public boolean connect(){
         try{
-            URL url = new URL(apiConfig.getAppURL());
+            URL url = new URL(apiConfig.getAppUrl());
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
         }catch (Exception e){
