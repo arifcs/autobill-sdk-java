@@ -5,36 +5,36 @@ import com.autobill.Constants;
 import java.io.File;
 
 public class APIConfig {
-    private String apiURL;
-    private String appURL;
-    private String clientID;
+    private String apiUrl;
+    private String appUrl;
+    private String clientId;
     private String clientSecret;
-    private String redirectURL;
+    private String redirectUrl;
     private String accessToken;
     private String refreshToken;
 
-    public String getApiURL() {
-        return apiURL;
+    public String getApiUrl() {
+        return apiUrl;
     }
 
-    public void setApiURL(String apiURL) {
-        this.apiURL = apiURL;
+    public void setApiUrl(String apiUrl) {
+        this.apiUrl = apiUrl;
     }
 
-    public String getAppURL() {
-        return appURL;
+    public String getAppUrl() {
+        return appUrl;
     }
 
-    public void setAppURL(String appURL) {
-        this.appURL = appURL;
+    public void setAppUrl(String appUrl) {
+        this.appUrl = appUrl;
     }
 
-    public String getClientID() {
-        return clientID;
+    public String getClientId() {
+        return clientId;
     }
 
-    public void setClientID(String clientID) {
-        this.clientID = clientID;
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 
     public String getClientSecret() {
@@ -45,12 +45,12 @@ public class APIConfig {
         this.clientSecret = clientSecret;
     }
 
-    public String getRedirectURL() {
-        return redirectURL;
+    public String getRedirectUrl() {
+        return redirectUrl;
     }
 
-    public void setRedirectURL(String redirectURL) {
-        this.redirectURL = redirectURL;
+    public void setRedirectUrl(String redirectUrl) {
+        this.redirectUrl = redirectUrl;
     }
 
     public String getAccessToken() {
@@ -70,10 +70,10 @@ public class APIConfig {
     }
 
     public APIConfig() {
-        this.appURL = Constants.DEFAULT_APP_URL;
-        this.apiURL = Constants.DEFAULT_API_URL;
-        this.clientID = Constants.CLIENT_ID;
-        this.redirectURL = Constants.REDIRECT_URL;
+        this.appUrl = Constants.DEFAULT_APP_URL;
+        this.apiUrl = Constants.DEFAULT_API_URL;
+        this.clientId = Constants.CLIENT_ID;
+        this.redirectUrl = Constants.REDIRECT_URL;
     }
 
     public static APIConfig readConfig(){
@@ -81,12 +81,20 @@ public class APIConfig {
     }
 
     public String getAuthorizeUrl(){
-        return appURL + "/api/v1/oauth2/authorize?client_id="+clientID +"&redirect_uri="+redirectURL+"&response_type=code";
+        return appUrl + "/api/v1/oauth2/authorize?client_id="+ clientId +"&redirect_uri="+ redirectUrl +"&response_type=code";
     }
-
-
-
     protected File getUserDir(){
         return new File(System.getProperty("user.dir"));
+    }
+
+    @Override
+    public String toString(){
+        return "apiURL = "+ apiUrl +"\n"+
+                "appUrl = "+ appUrl +"\n"+
+                "clientId = "+clientId+"\n"+
+                "clientSecret = "+ clientSecret +"\n"+
+                "refreshToken = "+ refreshToken +"\n"+
+                "accessToken = "+ accessToken +"\n"+
+                "redirectUrl = "+ redirectUrl +"\n";
     }
 }
