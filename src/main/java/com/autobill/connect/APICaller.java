@@ -43,14 +43,22 @@ public class APICaller {
         return null;
     }
 
-    public static String callByPathAndMethod(APIConfig apiConfig, String path, HttpMethod method){
+    public static String callByPathAndMethod(APIConfig apiConfig, String path, HttpMethod method, String data){
         String url = apiConfig.getApiUrl() + path;
+        System.out.println(data);
         try {
             switch (method){
                 case GET : return Unirest.get(url)
                         .header("authorization", "Bearer "+apiConfig.getAccessToken())
                         .header("cache-control", "no-cache")
                         .asString().getBody();
+                case POST :
+                    return Unirest.post(url)
+                            .header("authorization", "Bearer "+apiConfig.getAccessToken())
+                            .header("cache-control", "no-cache")
+                            .body(data)
+                            .asString().getBody();
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,8 +66,8 @@ public class APICaller {
         return null;
     }
 
-    public static String callResource(APIConfig apiConfig, APIResource apiResource, HttpMethod method){
+    public static String callResource(APIConfig apiConfig, APIResource apiResource, HttpMethod method, String data){
         String path = "/api/v1/" + apiResource.toString();
-        return callByPathAndMethod(apiConfig, path, method);
+        return callByPathAndMethod(apiConfig, path, method, data);
     }
 }

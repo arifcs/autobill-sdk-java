@@ -4,8 +4,11 @@ package com.autobill.model;
 https://json2csharp.com/json-to-pojo
  */
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Account{
     public String status;
     public String id;
