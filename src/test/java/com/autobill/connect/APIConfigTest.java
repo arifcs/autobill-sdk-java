@@ -14,7 +14,7 @@ public class APIConfigTest {
         APIConfig apiConfig = APIConfig.readConfig();
         apiConfig.setClientId("DDgNOjcOCAsCCzQHBQs6YTYCDjY6NAIJBzoJAjcNBQYCOw0IBwgGDDgJOQs6Ag4FDQYCBQ4KDjk=");
         apiConfig.setClientSecret("DjoPPDkQCg0ECmM8ODg9NDAEBw44NgQLCg4KBBAOOwgECBAODjg4OQ0NDzwOBBAHDwgEDws8Ojk=");
-        apiConfig.setAccessToken("LlovXFkwKi0kWjAwWyspYTkkLC4rYSQrKy9bJFguWS0kLFtYWVwpKDBaKS9YJDAnLygkLi8tKCo=");
+        apiConfig.setAccessToken("NmI3ZGE4MjUsYzg3YzI0MzMsYGU1OSwzZTFiLGAzMDAsZWAvZDBiN2A1ZDhhLDgvNzAsY2UzYjQ=");
         apiConfig.setRefreshToken("M180YV41LzIpMGI0MV5iNjQpYF5eZCkwNDI0KV40YTMpXi0sMF4yX19dNF5iKTUsNC0pXjQzNDQ=");
         apiConfig.setRedirectUrl("http://localhost:8080/callBack/index");
         return apiConfig;
