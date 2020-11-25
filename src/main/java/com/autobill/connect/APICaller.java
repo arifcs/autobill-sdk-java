@@ -7,14 +7,16 @@ import com.mashape.unirest.http.Unirest;
 public class APICaller {
     public static String getAccessToken(APIConfig apiConfig, String code){
         try {
+            String requestBody = "{  \"grant_type\": \"authorization_code\", " +
+                    " \"code\": \""+code+"\", " +
+                    " \"client_id\": \""+apiConfig.getClientId()+"\", " +
+                    " \"client_secret\": \""+apiConfig.getClientSecret()+"\", " +
+                    " \"redirect_uri\": \""+apiConfig.getRedirectUrl()+"\"}";
+            System.out.println(requestBody);
             HttpResponse<String> response = Unirest.post(apiConfig.getApiUrl()+"/api/v1/oauth2/token")
                     .header("content-type", "application/json")
                     .header("cache-control", "no-cache")
-                    .body("{  \"grant_type\": \"authorization_code\", " +
-                            " \"code\": \"${code}\", " +
-                            " \"client_id\": \""+apiConfig.getClientId()+"\", " +
-                            " \"client_secret\": \""+apiConfig.getClientSecret()+"\", " +
-                            " \"redirect_uri\": \""+apiConfig.getRedirectUrl()+"\"}")
+                    .body(requestBody)
                     .asString();
             return response.getBody();
         } catch (Exception e) {
@@ -28,7 +30,7 @@ public class APICaller {
             HttpResponse<String> response = Unirest.post(apiConfig.getApiUrl()+"/api/v1/oauth2/token")
                     .header("content-type", "application/json")
                     .header("cache-control", "no-cache")
-                    .body("{  \"refresh_token\": \"${apiConfig.getRefreshToken()}\", " +
+                    .body("{  \"refresh_token\": \""+apiConfig.getRefreshToken()+"\", " +
                             " \"grant_type\": \"refresh_token\", " +
                             " \"client_id\": \""+apiConfig.getClientId()+"\", " +
                             " \"client_secret\": \""+apiConfig.getClientSecret()+"\", " +
