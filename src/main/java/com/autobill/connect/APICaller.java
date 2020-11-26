@@ -58,6 +58,11 @@ public class APICaller {
                             .header("cache-control", "no-cache")
                             .body(data)
                             .asString().getBody();
+                case PATCH: Unirest.patch(url)
+                        .header("authorization", "Bearer "+apiConfig.getAccessToken())
+                        .header("cache-control", "no-cache")
+                        .body(data)
+                        .asString().getBody();
 
             }
         } catch (Exception e) {
@@ -70,6 +75,9 @@ public class APICaller {
         String path = "/api/v1/" + apiResource.toString();
         if(id != null){
             path = path + "/" + id;
+            if(method.equals(HttpMethod.PATCH)){
+                path = path + "/information";
+            }
         }
         return callByPathAndMethod(apiConfig, path, method, data);
     }
