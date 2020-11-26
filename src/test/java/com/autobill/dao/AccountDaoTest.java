@@ -17,8 +17,6 @@ public class AccountDaoTest {
         APIConfig apiConfig = APIConfigTest.createTestApiConfig();
         List<Account> accountList = AccountDao.readAll(apiConfig);
         assertNotNull(accountList);
-        //assertEquals(accountList.accounts.size(),1);
-        //System.out.println(accountList.accounts.get(0).id);
     }
 
 }

@@ -54,7 +54,6 @@ public class AccountDao {
         }
         json = "{ "+ "\"account\": " +json+" " +" }";
         String response = APICaller.callResource(apiConfig, APIResource.ACCOUNT, HttpMethod.POST, json,null);
-        System.out.println(response);
     }
 
     public static Account update(APIConfig apiConfig, String id, Map<String, String> map) {
@@ -78,6 +77,5 @@ public class AccountDao {
 
     public static void delete(APIConfig apiConfig, String id) {
         String response = APICaller.callResource(apiConfig, APIResource.ACCOUNT, HttpMethod.DELETE, null, id);
-        System.out.println(response);
     }
 }

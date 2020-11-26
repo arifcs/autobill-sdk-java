@@ -44,7 +44,6 @@ public class APICaller {
 
     public static String callByPathAndMethod(APIConfig apiConfig, String path, HttpMethod method, String data){
         String url = apiConfig.getApiUrl() + path;
-        System.out.println(data);
         try {
             switch (method){
                 case GET : return Unirest.get(url)
