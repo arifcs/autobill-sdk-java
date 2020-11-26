@@ -61,7 +61,7 @@ public class APICaller {
                         .header("cache-control", "no-cache")
                         .body(data)
                         .asString().getBody();
-                case DELETE: return Unirest.patch(url)
+                case DELETE: return Unirest.delete(url)
                         .header("authorization", "Bearer "+apiConfig.getAccessToken())
                         .header("cache-control", "no-cache")
                         .asString().getBody();
