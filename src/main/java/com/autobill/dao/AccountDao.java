@@ -57,7 +57,7 @@ public class AccountDao {
         System.out.println(response);
     }
 
-    public static void update(APIConfig apiConfig, String id, Map<String, String> map) {
+    public static Account update(APIConfig apiConfig, String id, Map<String, String> map) {
         ObjectMapper objectMapper = new ObjectMapper();
         String json = null;
         try {
@@ -67,6 +67,17 @@ public class AccountDao {
         }
         json = "{ "+ "\"account\": " +json+" " +" }";
         String response = APICaller.callResource(apiConfig, APIResource.ACCOUNT, HttpMethod.PATCH, json, id);
+        AccountView accountView = null;
+        try {
+            accountView = objectMapper.readValue(response, AccountView.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return accountView.account;
+    }
+
+    public static void delete(APIConfig apiConfig, String id) {
+        String response = APICaller.callResource(apiConfig, APIResource.ACCOUNT, HttpMethod.DELETE, null, id);
         System.out.println(response);
     }
 }

@@ -12,7 +12,6 @@ public class APICaller {
                     " \"client_id\": \""+apiConfig.getClientId()+"\", " +
                     " \"client_secret\": \""+apiConfig.getClientSecret()+"\", " +
                     " \"redirect_uri\": \""+apiConfig.getRedirectUrl()+"\"}";
-            System.out.println(requestBody);
             HttpResponse<String> response = Unirest.post(apiConfig.getApiUrl()+"/api/v1/oauth2/token")
                     .header("content-type", "application/json")
                     .header("cache-control", "no-cache")
@@ -58,10 +57,14 @@ public class APICaller {
                             .header("cache-control", "no-cache")
                             .body(data)
                             .asString().getBody();
-                case PATCH: Unirest.patch(url)
+                case PATCH: return Unirest.patch(url)
                         .header("authorization", "Bearer "+apiConfig.getAccessToken())
                         .header("cache-control", "no-cache")
                         .body(data)
+                        .asString().getBody();
+                case DELETE: return Unirest.patch(url)
+                        .header("authorization", "Bearer "+apiConfig.getAccessToken())
+                        .header("cache-control", "no-cache")
                         .asString().getBody();
 
             }
