@@ -66,8 +66,11 @@ public class APICaller {
         return null;
     }
 
-    public static String callResource(APIConfig apiConfig, APIResource apiResource, HttpMethod method, String data){
+    public static String callResource(APIConfig apiConfig, APIResource apiResource, HttpMethod method, String data, String id){
         String path = "/api/v1/" + apiResource.toString();
+        if(id != null){
+            path = path + "/" + id;
+        }
         return callByPathAndMethod(apiConfig, path, method, data);
     }
 }
