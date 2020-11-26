@@ -1,8 +1,12 @@
 package com.autobill.connect;
 
+import com.autobill.APIException;
+import com.autobill.TokenExpiredException;
+import com.autobill.UnexpectedResponseException;
 import com.mashape.unirest.http.HttpMethod;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 
 public class APICaller {
     public static String getAccessToken(APIConfig apiConfig, String code){
@@ -42,38 +46,53 @@ public class APICaller {
         return null;
     }
 
-    public static String callByPathAndMethod(APIConfig apiConfig, String path, HttpMethod method, String data){
+    public static String callByPathAndMethod(APIConfig apiConfig, String path, HttpMethod method, String data) throws APIException {
         String url = apiConfig.getApiUrl() + path;
+        HttpResponse response = null;
         try {
             switch (method){
-                case GET : return Unirest.get(url)
-                        .header("authorization", "Bearer "+apiConfig.getAccessToken())
-                        .header("cache-control", "no-cache")
-                        .asString().getBody();
+                case GET :
+                    response = Unirest.get(url)
+                            .header("authorization", "Bearer "+apiConfig.getAccessToken())
+                            .header("cache-control", "no-cache")
+                            .asString();
+                    break;
                 case POST :
-                    return Unirest.post(url)
+                    response = Unirest.post(url)
                             .header("authorization", "Bearer "+apiConfig.getAccessToken())
                             .header("cache-control", "no-cache")
                             .body(data)
-                            .asString().getBody();
-                case PATCH: return Unirest.patch(url)
-                        .header("authorization", "Bearer "+apiConfig.getAccessToken())
-                        .header("cache-control", "no-cache")
-                        .body(data)
-                        .asString().getBody();
-                case DELETE: return Unirest.delete(url)
-                        .header("authorization", "Bearer "+apiConfig.getAccessToken())
-                        .header("cache-control", "no-cache")
-                        .asString().getBody();
+                            .asString();
+                    break;
+                case PATCH:
+                    response = Unirest.patch(url)
+                            .header("authorization", "Bearer "+apiConfig.getAccessToken())
+                            .header("cache-control", "no-cache")
+                            .body(data)
+                            .asString();
+                    break;
+                case DELETE:
+                    response = Unirest.delete(url)
+                            .header("authorization", "Bearer "+apiConfig.getAccessToken())
+                            .header("cache-control", "no-cache")
+                            .asString();
+                    break;
 
             }
-        } catch (Exception e) {
+        } catch (UnirestException e) {
             e.printStackTrace();
+            throw new APIException();
+        }
+        if(response.getStatus()>=200 && response.getStatus() <=299){
+            return response.getBody().toString();
+        }
+        if(response.getStatus() == 401){
+            throw new TokenExpiredException();
         }
         return null;
     }
 
-    public static String callResource(APIConfig apiConfig, APIResource apiResource, HttpMethod method, String data, String id){
+    public static String callResource(APIConfig apiConfig, APIResource apiResource, HttpMethod method, String data, String id) throws APIException{
         String path = "/api/v1/" + apiResource.toString();
         if(id != null){
             path = path + "/" + id;

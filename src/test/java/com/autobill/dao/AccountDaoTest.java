@@ -1,5 +1,6 @@
 package com.autobill.dao;
 
+import com.autobill.APIException;
 import com.autobill.connect.APIConfig;
 import com.autobill.connect.APIConfigTest;
 import com.autobill.model.Account;
@@ -15,8 +16,12 @@ public class AccountDaoTest {
     @Test
     public void testRead(){
         APIConfig apiConfig = APIConfigTest.createTestApiConfig();
-        List<Account> accountList = AccountDao.readAll(apiConfig);
-        assertNotNull(accountList);
+        try {
+            List<Account> accountList = AccountDao.readAll(apiConfig);
+            assertNotNull(accountList);
+        } catch (APIException e) {
+            e.printStackTrace();
+        }
     }
 
 }
